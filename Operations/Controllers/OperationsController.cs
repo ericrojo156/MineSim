@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyMicroservice.Data;
+using Hxgn.Min.Platform.Libraries;
 
 namespace MyMicroservice.Controllers;
 
@@ -7,13 +8,20 @@ namespace MyMicroservice.Controllers;
 [Route("[controller]")]
 public class OperationsController : ControllerBase
 {
-    [HttpGet(Name = "GetSummary")]
-    public MineSummaries Get()
-    {
-        // TODO: send request to Ruby Mine microservice
-        // TODO: send request to MicroService Mine microservice
+    private static readonly HttpClient client = new HttpClient();
 
-        MineSummaries mineSummaries = new MineSummaries();
+    [HttpGet(Name = "GetSummary")]
+    public async Task<MineSummaries> Get()
+    {
+        string rubyMineString = await client.GetStringAsync("http://localhost:5006/RubyMine");
+        MineDTO rubyMine = Helpers.Serializer.DeserializeJson<MineDTO>(rubyMineString);
+
+        string diamondMineString = await client.GetStringAsync("http://localhost:5007/DiamondMine");
+        MineDTO diamondMine = Helpers.Serializer.DeserializeJson<MineDTO>(diamondMineString);
+
+        List<MineDTO> summaries = new List<MineDTO>() { rubyMine, diamondMine }.Where(summary => summary?.Name != null).ToList() ?? new List<MineDTO>();
+        MineSummaries mineSummaries = new MineSummaries(summaries);
+
         return mineSummaries;
     }
 }

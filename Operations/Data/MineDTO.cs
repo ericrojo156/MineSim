@@ -15,5 +15,9 @@ namespace MyMicroservice.Data
     public class MineSummaries
     {
         public List<MineDTO> Summaries { get; set; } = new List<MineDTO>();
+        public MineSummaries(List<MineDTO> mines)
+        {
+            Summaries = mines;
+        }
     }
 }
