@@ -1,0 +1,30 @@
+﻿{
+  "connection": {
+    "port": 62873,
+    "useHttps": false,
+    "certificatePath": "C:\\ProgramData\\Hexagon\\Mining\\Services\\mct-gw\\conf\\Certificate.pfx",
+    "certificatePwd": "hexagonmining",
+    "publishInternalPort": true,
+    "internalPort": 6226
+  },
+  "routes": [
+    {
+      "originPath": "/api/min/rubymine",
+      "destinationPath": "/rubymine",
+      "destinationScheme": "http",
+      "destinationService": {
+        "host": "localhost",
+        "port": 5006
+      }
+    }
+  ],
+  "services": [
+    {
+      "serviceKey": "example",
+      "address": {
+        "host": "localhost",
+        "port": 12345
+      }
+    }
+  ]
+}
