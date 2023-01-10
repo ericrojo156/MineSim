@@ -12,4 +12,4 @@ A simple mining simulation implemented by microservices in .Net framework
 * POST http://localhost:5007/api/min/diamondmine, which will excavate from the Diamond Mine (at the expense of consuming some mining equipment condition at the site)
 * GET http://localhost:5008/api/min/operations, which will obtain a list of summaries from both mines (Ruby and Diamond)
 
-![microservices_components](https://user-images.githubusercontent.com/15134624/211641431-940e0d22-7063-4f9d-b48d-fc61bd01d511.png)
+![Mine_Simulator_Components](https://user-images.githubusercontent.com/15134624/211642477-bc7fc240-7813-4567-b233-0271bec68f5a.png)
