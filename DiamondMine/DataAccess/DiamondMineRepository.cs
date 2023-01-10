@@ -9,21 +9,21 @@ using Hxgn.Min.Platform.Libraries;
 
 namespace Mine.DataAccess
 {
-    public class RubyMineRepository : IMineRepository
+    public class DiamondMineRepository : IMineRepository
     {
-        private string filePath = "./rubyMineData.json";
-        private MyMicroservice.Models.RubyMine mineState;
-        public RubyMineRepository()
+        private string filePath = "./diamondMineData.json";
+        private MyMicroservice.Models.DiamondMine mineState;
+        public DiamondMineRepository()
         {
             Load();
             if (mineState == null)
             {
-                mineState = new MyMicroservice.Models.RubyMine();
+                mineState = new MyMicroservice.Models.DiamondMine();
                 Save();
             }
         }
 
-        public MyMicroservice.Models.RubyMine GetMineState()
+        public MyMicroservice.Models.DiamondMine GetMineState()
         {
             Load();
             return mineState;
@@ -45,7 +45,7 @@ namespace Mine.DataAccess
 
         public void Load()
         {
-            mineState = Helpers.Serializer.DeserializeJsonFromFile<MyMicroservice.Models.RubyMine>(filePath);
+            mineState = Helpers.Serializer.DeserializeJsonFromFile<MyMicroservice.Models.DiamondMine>(filePath);
         }
 
         public void Save() {

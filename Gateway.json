@@ -18,12 +18,21 @@
         }
     },
     {
-        "originPath": "/api/min/rubymine",
-        "destinationPath": "/rubymine",
+        "originPath": "api/min/diamondmine",
+        "destinationPath": "/diamondmine",
         "destinationScheme": "http",
         "destinationService": {
             "host": "localhost",
-            "port": 5006
+            "port": 5007
+        }
+    },
+    {
+        "originPath": "api/min/operations",
+        "destinationPath": "/operations",
+        "destinationScheme": "http",
+        "destinationService": {
+            "host": "localhost",
+            "port": 5008
         }
     }
   ],
