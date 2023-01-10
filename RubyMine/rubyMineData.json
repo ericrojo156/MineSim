@@ -1,7 +1,24 @@
 {
   "mineralType": "Rubies",
   "resourceQuantityRemaining": 1000,
-  "equipmentOnSite": {},
-  "projectBudget": 0,
-  "lithologyHardness": 0
+  "equipmentOnSite": {
+    "drill": {
+      "name": "Drill",
+      "price": 1000000,
+      "condition": {
+        "points": 80,
+        "status": "Okay"
+      }
+    },
+    "operator": {
+      "name": "Operator",
+      "price": 60000,
+      "condition": {
+        "points": 80,
+        "status": "Okay"
+      }
+    }
+  },
+  "projectBudget": 8940000,
+  "lithologyHardness": 20
 }

@@ -11,19 +11,21 @@ namespace Mine.DataAccess
 {
     public class RubyMineRepository : IMineRepository
     {
-        private string filePath = "rubyMineData.json";
+        private string filePath = "../rubyMineData.json";
         private MyMicroservice.Models.RubyMine mineState;
         public RubyMineRepository()
         {
-            mineState = Helpers.Serializer.DeserializeJsonFromFile<MyMicroservice.Models.RubyMine>(filePath);
+            Load();
             if (mineState == null)
             {
                 mineState = new MyMicroservice.Models.RubyMine();
+                Save();
             }
         }
 
         public MyMicroservice.Models.RubyMine GetMineState()
         {
+            Load();
             return mineState;
         }
 
@@ -32,6 +34,18 @@ namespace Mine.DataAccess
             ExcavationResult result = mineState.Excavate();
             Save();
             return result;
+        }
+
+        public BuyResult BuyEquipment(string equipmentName)
+        {
+            BuyResult buyResult = mineState.BuyEquipment(equipmentName);
+            Save();
+            return buyResult;
+        }
+
+        public void Load()
+        {
+            mineState = Helpers.Serializer.DeserializeJsonFromFile<MyMicroservice.Models.RubyMine>(filePath);
         }
 
         public void Save() {

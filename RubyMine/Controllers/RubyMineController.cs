@@ -20,8 +20,8 @@ public class RubyMineController : ControllerBase
     [HttpGet(Name = "GetRubies")]
     public MineDTO Get()
     {
-        int quantity = rubyMineRepository?.GetMineState()?.ResourceQuantityRemaining ?? 0;
-        return new MineDTO("Ruby Mine", quantity);
+        IMineProject mine = rubyMineRepository?.GetMineState() ?? new RubyMine();
+        return new MineDTO("Ruby Mine", mine);
     }
 
     [HttpPost(Name = "PostRubies")]
@@ -30,5 +30,4 @@ public class RubyMineController : ControllerBase
         ExcavationResult extractionResult = rubyMineRepository?.Excavate();
         return extractionResult ?? new ExcavationResult(0, new List<IEquipment>(), "");
     }
-
 }

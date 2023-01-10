@@ -6,5 +6,6 @@ namespace MyMicroservice.DataAccess
     {
         public Models.RubyMine GetMineState();
         public ExcavationResult Excavate();
+        public BuyResult BuyEquipment(string equipmentName);
     }
 }

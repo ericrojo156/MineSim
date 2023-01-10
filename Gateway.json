@@ -9,13 +9,22 @@
   },
   "routes": [
     {
-      "originPath": "/api/min/rubymine",
-      "destinationPath": "/rubymine",
-      "destinationScheme": "http",
-      "destinationService": {
-        "host": "localhost",
-        "port": 5006
-      }
+        "originPath": "/api/min/rubymine",
+        "destinationPath": "/rubymine",
+        "destinationScheme": "http",
+        "destinationService": {
+            "host": "localhost",
+            "port": 5006
+        }
+    },
+    {
+        "originPath": "/api/min/rubymine",
+        "destinationPath": "/rubymine",
+        "destinationScheme": "http",
+        "destinationService": {
+            "host": "localhost",
+            "port": 5006
+        }
     }
   ],
   "services": [

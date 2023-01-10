@@ -1,6 +1,7 @@
 ﻿namespace MyMicroservice.Models
 {
     using EquipmentCollection = Dictionary<string, IEquipment>;
+    
     public enum ConditionStatus
     {
         Okay,
@@ -97,11 +98,29 @@
             ExcavationMessage = message;
         }
     }
+    public class BuyResult
+    {
+        public string StatusMessage { get; set; }
+        public int RemainingMiningProjectBudget { get; set; }
+        public IEquipment? EquipmentBought { get; set; }
+        public BuyResult()
+        {
+            StatusMessage = "";
+            EquipmentBought = null;
+            RemainingMiningProjectBudget = 0;
+        }
+        public BuyResult(string message, IEquipment boughtEquipment, int remainingBudget)
+        {
+            StatusMessage = message;
+            EquipmentBought = boughtEquipment;
+            RemainingMiningProjectBudget = remainingBudget;
+        }
+    }
     public interface IMineProject
     {
         public int ResourceQuantityRemaining { get; set; }
 
-        public Dictionary<string, IEquipment> EquipmentOnSite { get; set; }
+        public EquipmentCollection EquipmentOnSite { get; set; }
 
         public int ProjectBudget { get; set; }
 
@@ -110,6 +129,8 @@
         public bool AddEquipment(IEquipment newEquipment);
 
         public ExcavationResult Excavate();
+
+        public BuyResult BuyEquipment(string equipmentName);
     }
     public class RubyMine : IMineProject
     {
@@ -131,13 +152,23 @@
         public RubyMine()
         {
             MineralType = "Rubies";
+            ProjectBudget = 10000000;
+            LithologyHardness = 20;
             ResourceQuantityRemaining = 1000;
             EquipmentOnSite = new EquipmentCollection();
+            BuyEquipment("Drill");
+            BuyEquipment("Operator");
         }
 
         public RubyMine(RubyMine mine)
         {
+            MineralType = "Rubies";
+            ProjectBudget = mine.ProjectBudget;
+            LithologyHardness = 20;
             ResourceQuantityRemaining = mine.ResourceQuantityRemaining;
+            EquipmentOnSite = mine.EquipmentOnSite;
+            BuyEquipment("Drill");
+            BuyEquipment("Operator");
         }
 
         public bool AddEquipment(IEquipment newEquipment)
@@ -193,6 +224,18 @@
             int minedAmount = LithologyHardness;
             return new ExcavationResult(minedAmount, usedEquipment.Values.ToList(), String.Format("Excavation successfully yielded {0} {1}.", minedAmount, MineralType));
         }
-
+        public BuyResult BuyEquipment(string equipmentName)
+        {
+            IEquipment equipmentToBuy = EquipmentBuilder.Build(equipmentName);
+            if (equipmentToBuy != null && ProjectBudget - equipmentToBuy.Price >= 0)
+            {
+                ProjectBudget -= equipmentToBuy.Price;
+                AddEquipment(equipmentToBuy);
+                string successMessage = String.Format("Successfully bought {0} for ${1}", equipmentName, equipmentToBuy.Price);
+                return new BuyResult(successMessage, equipmentToBuy, ProjectBudget);
+            }
+            string failureMessage = String.Format("Failed to buy {0}: cost of equipment is {1}, but the {2} only has a remaining project budget of {3}", equipmentName, equipmentToBuy.Price, MineralType, ProjectBudget);
+            return new BuyResult(failureMessage, equipmentToBuy, ProjectBudget);
+        }
     }
 }
